@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  python3:
+    build: ./app
+    container_name: 'fastapi_login_python'
+    working_dir: '/root/'
+    tty: true
+    volumes:
+      - ./app/opt:/root/opt
+    ports:
+      - "5000:5000"
+
+  db:
+    image: mysql
+    platform: linux/amd64
+    container_name: fastapi_login_mysql
+    ports:
+      - "33068:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: demo
+      TZ: "Asia/Tokyo"
+    volumes:
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
