@@ -23,12 +23,15 @@ fake_db = {'freddie@example.com': {'password': 'queen'}}
 
 
 @manager.user_loader
-def load_user(email: str): 
+def load_user(email: str):
+    print("load_user")
     user = fake_db.get(email)
     print(user)
 
 @app.post('/auth/token')
 def login(data = Depends()):
+    print("login")
+
     email = data.username
     password = data.password
 
@@ -45,7 +48,13 @@ def login(data = Depends()):
 
 @app.get("/")
 def index(user=Depends(manager)):
-    return {"hello": "world!!"}
+    print("index")
+    return {"hello": "world!!","user":user}
+
+@app.get("/test")
+def test():
+    print("test")
+    return {"test": "world!!"}
 
 
 @app.get("/items/")
